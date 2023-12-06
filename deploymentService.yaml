@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot-deployment
+  labels:
+    app: aichatbot
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chatbot
+  template:
+    metadata:
+      labels:
+        app: chatbot
+    spec: #each pod spec
+      containers:
+      - name: aichatbot-cont
+        image: localhost:6666/aichatbot:latest
+        ports:
+        - containerPort: 8000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatbot-service
+  labels:
+    app: chatbot
+spec:
+  selector:
+    app: chatbot
+  ports:
+    - protocol: TCP
+      port: 80   
+      targetPort: 8000  
+  type: LoadBalancer  
