@@ -23,15 +23,11 @@ pipeline {
          }
       }
 
-      script {
-
+      steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-
           withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-            //def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
             sh "git config user.email wd.sandeepnayak@gmail.com"
             sh "git config user.name SANDEEP-NAYAK"
-            //sh "git switch master"
             sh "git remote add origin https://github.com/SANDEEP-NAYAK/aichatbot-CD-repo.git"
             sh "cat deploymentService.yaml"
             sh "sed -i 's+localhost:6666/aichatbot.*+localhost:6666/aichatbot:${DOCKERTAG}+g' deploymentService.yaml"
