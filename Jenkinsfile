@@ -1,6 +1,10 @@
 pipeline {
   agent none
 
+   parameters {
+        string(name: 'DOCKERTAG', defaultValue: 'latest', description: 'A variable received from upstream pipeline')
+    }
+
   stages {
     
     stage('Clone Code') {
@@ -30,10 +34,10 @@ pipeline {
             sh "git config user.name SANDEEP-NAYAK"
             // sh "git remote add origin https://github.com/SANDEEP-NAYAK/aichatbot-CD-repo.git"
             sh "cat deploymentService.yaml"
-            sh "sed -i 's+localhost:6666/aichatbot.*+localhost:6666/aichatbot:${DOCKERTAG}+g' deploymentService.yaml"
+            sh "sed -i 's+localhost:6666/aichatbot.*+localhost:6666/aichatbot:${params.DOCKERTAG}+g' deploymentService.yaml"
             sh "cat deploymentService.yaml"
             sh "git add ."
-            sh "git commit -m 'Done by Jenkins Job changemanifest: ${env.BUILD_NUMBER}'"
+            sh "git commit -m 'Done by Jenkins Job changemanifest: ${BUILD_ID}'"
             sh "git push origin main"
          }
        }
