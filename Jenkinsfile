@@ -38,7 +38,7 @@ pipeline {
             sh "cat deploymentService.yaml"
             sh "git add ."
             sh "git commit -m 'Done by Jenkins Job changemanifest: ${BUILD_ID}'"
-            sh "git push origin main"
+            sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/aichatbot-CD-repo.git HEAD:main"
          }
        }
      }
