@@ -16,7 +16,7 @@ spec:
     spec: #each pod spec
       containers:
       - name: aichatbot-cont
-        image: localhost:6666/aichatbot:latest
+        image: localhost:6666/aichatbot:78
         ports:
         - containerPort: 8000
 
